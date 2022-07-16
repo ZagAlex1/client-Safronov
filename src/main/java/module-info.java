@@ -1,6 +1,7 @@
 module ru.geekbrains.client {
     requires javafx.controls;
     requires javafx.fxml;
+    requires lombok;
 
 
     opens ru.geekbrains.client to javafx.fxml;
