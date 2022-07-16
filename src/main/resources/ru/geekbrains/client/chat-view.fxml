@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.geekbrains.client.controllers.ChatController">
+   <children>
+      <SplitPane dividerPositions="0.29797979797979796" prefHeight="400.0" prefWidth="600.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <children>
+                  <ListView fx:id="userList" layoutX="-1.0" layoutY="1.0" prefHeight="398.0" prefWidth="175.0" />
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <children>
+                  <SplitPane orientation="VERTICAL" prefHeight="398.0" prefWidth="417.0">
+                    <items>
+                        <SplitPane dividerPositions="0.9141414141414141" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0">
+                          <items>
+                              <VBox prefHeight="191.0" prefWidth="415.0">
+                                 <children>
+                                    <HBox prefHeight="30.0" prefWidth="400.0">
+                                       <children>
+                                          <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                                             <children>
+                                                <Label alignment="CENTER" prefHeight="30.0" prefWidth="196.0" text="Чат" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   <font>
+                                                      <Font size="17.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </AnchorPane>
+                                          <AnchorPane prefHeight="29.0" prefWidth="215.0">
+                                             <children>
+                                                <Label fx:id="userNameTitle" alignment="CENTER" layoutX="2.0" layoutY="6.0" prefHeight="29.0" prefWidth="215.0" text="User" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   <font>
+                                                      <Font size="17.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </AnchorPane>
+                                       </children>
+                                    </HBox>
+                                    <TextArea fx:id="chatHistory" prefHeight="331.0" prefWidth="415.0" />
+                                 </children>
+                              </VBox>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="165.0" prefWidth="415.0">
+                                 <children>
+                                    <HBox prefHeight="31.0" prefWidth="415.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <children>
+                                          <TextField fx:id="inputField" prefHeight="31.0" prefWidth="355.0" promptText="Insert your message here">
+                                             <font>
+                                                <Font name="Arial" size="15.0" />
+                                             </font>
+                                          </TextField>
+                                          <Button fx:id="sendButton" mnemonicParsing="false" prefHeight="34.0" prefWidth="104.0" text="Send" />
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </AnchorPane>
+                          </items>
+                        </SplitPane>
+                    </items>
+                  </SplitPane>
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+   </children>
+</AnchorPane>
