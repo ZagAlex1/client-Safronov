@@ -13,9 +13,9 @@ public class ClientHandler {
     private static final String AUTH_CMD_PREFIX = "/auth"; // + login + password
     private static final String AUTHOK_CMD_PREFIX = "/authok"; // + username
     private static final String AUTHERR_CMD_PREFIX = "/autherr"; // + error message
-    private static final String CLIENT_MSG_CMD_PREFIX = "/cMsg"; // + msg
-    private static final String SERVER_MSG_CMD_PREFIX = "/sMsg"; // + smsg
-    private static final String PRIVATE_MSG_CMD_PREFIX = "/pMsg"; // + pmsg
+    private static final String CLIENT_MSG_CMD_PREFIX = "/cm"; // + msg
+    private static final String SERVER_MSG_CMD_PREFIX = "/sm"; // + smsg
+    private static final String PRIVATE_MSG_CMD_PREFIX = "/pm"; // + client + pmsg
     private static final String STOP_SERVER_MSG_CMD_PREFIX = "/stop";
     private static final String END_CLIENT_MSG_CMD_PREFIX = "/end";
 
@@ -41,12 +41,13 @@ public class ClientHandler {
                 readMessage();
             } catch (IOException e) {
                 e.printStackTrace();
+                myServer.unSubscribe(this);
             }
         }).start();
     }
 
     private void authentication() throws IOException {
-        while(true) {
+        while (true) {
             String message = in.readUTF();
             if (message.startsWith(AUTH_CMD_PREFIX)) {
                 boolean isSuccessAuth = processAuthentication(message);
@@ -70,7 +71,7 @@ public class ClientHandler {
 
         AuthenticationService auth = myServer.getAuthenticationService();
 
-        username = auth.getUserNameByLoginAndPassword(login,password);
+        username = auth.getUserNameByLoginAndPassword(login, password);
 
         if (username != null) {
 
@@ -82,7 +83,7 @@ public class ClientHandler {
             out.writeUTF(AUTHOK_CMD_PREFIX + " " + username);
             myServer.subscribe(this);
             System.out.println("Пользователь " + username + " подключился к чату ");
-
+            myServer.broadcastMessage(String.format(">>> %s присоединился к чату", username), this, true);
             return true;
 
         } else {
@@ -101,7 +102,11 @@ public class ClientHandler {
             } else if (message.startsWith(END_CLIENT_MSG_CMD_PREFIX)) {
                 return;
             } else if (message.startsWith(PRIVATE_MSG_CMD_PREFIX)) {
-                //TODO
+                String[] parts = message.split("\\s+", 3);
+                String recipient = parts[1];
+                String privateMessage = parts[2];
+
+                myServer.sendPrivateMessage(this, recipient, privateMessage);
             } else {
                 myServer.broadcastMessage(message, this);
 
@@ -111,7 +116,11 @@ public class ClientHandler {
     }
 
     public void sendMessage(String sender, String message) throws IOException {
-        out.writeUTF(String.format("%s %s %s", CLIENT_MSG_CMD_PREFIX, sender, message));
+        if (sender != null) {
+            out.writeUTF(String.format("%s %s %s", CLIENT_MSG_CMD_PREFIX, sender, message));
+        } else {
+            out.writeUTF(String.format("%s %s", SERVER_MSG_CMD_PREFIX, message));
+        }
     }
 
 
