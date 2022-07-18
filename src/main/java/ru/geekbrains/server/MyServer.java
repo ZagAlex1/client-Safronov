@@ -28,7 +28,7 @@ public class MyServer {
         System.out.println("--------------");
 
         try {
-            while(true) {
+            while (true) {
                 waitAndProcessNewClientConnection();
             }
         } catch (IOException e) {
@@ -59,6 +59,7 @@ public class MyServer {
 
     public synchronized void unSubscribe(ClientHandler clientHandler) {
         clients.remove(clientHandler);
+        System.out.println(clients);
     }
 
     public synchronized boolean isUsernameBusy(String username) {
@@ -70,12 +71,24 @@ public class MyServer {
         return false;
     }
 
-    public synchronized void broadcastMessage(String message, ClientHandler sender) throws IOException {
+    public synchronized void broadcastMessage(String message, ClientHandler sender, boolean isServerMessage) throws IOException {
         for (ClientHandler client : clients) {
             if (client == sender) {
                 continue;
             }
-            client.sendMessage(sender.getUsername(), message);
+            client.sendMessage(isServerMessage ? null : sender.getUsername(), message);
+        }
+    }
+
+    public synchronized void broadcastMessage(String message, ClientHandler sender) throws IOException {
+        broadcastMessage(message, sender, false);
+    }
+
+    public synchronized void  sendPrivateMessage(ClientHandler sender, String recipient, String privateMessage) throws IOException {
+        for (ClientHandler client : clients) {
+            if (client.getUsername().equals(recipient)) {
+                client.sendMessage(sender.getUsername(), privateMessage);
+            }
         }
     }
 }

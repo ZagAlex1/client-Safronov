@@ -42,7 +42,7 @@
                                           </AnchorPane>
                                           <AnchorPane prefHeight="29.0" prefWidth="215.0">
                                              <children>
-                                                <Label fx:id="userNameTitle" alignment="CENTER" layoutX="2.0" layoutY="6.0" prefHeight="29.0" prefWidth="215.0" text="User" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                <Label fx:id="usernameTitle" alignment="CENTER" layoutX="2.0" layoutY="6.0" prefHeight="29.0" prefWidth="215.0" text="User" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                    <font>
                                                       <Font size="17.0" />
                                                    </font>
